@@ -34,8 +34,7 @@
     <link rel="stylesheet" href="{{ asset('css/main.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/dore.light.bluenavy.min.css')}}" />
-    
-    
+    @livewireStyles
 </head>
 
 
@@ -251,5 +250,6 @@
     <script src="{{asset('js/vendor/glide.min.js')}}"></script>
 
     @stack('scripts')
+    @livewireScripts
 </body>
 </html>

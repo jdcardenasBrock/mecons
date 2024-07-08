@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap.rtl.only.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap-float-label.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/main.css')}}" />
+    @livewireStyles
 </head>
 <body class="background show-spinner no-footer">
     <div class="fixed-background"></div> 
@@ -30,5 +31,6 @@
     <script src="{{asset('js/vendor/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('js/dore.script.js')}}"></script>
     <script src="{{asset('js/scripts.js')}}"></script>
+    @livewireScripts
 </body>
 </html>

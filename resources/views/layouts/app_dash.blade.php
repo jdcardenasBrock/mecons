@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{ asset('css/vendor/component-custom-switch.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/main.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css')}}" />
-    
+    @livewireStyles
 </head>
 
 
@@ -244,5 +244,6 @@
     <script src="{{asset('js/dore.script.js')}}"></script>
     <script src="{{asset('js/scripts.js')}}"></script>
     @stack('scripts')
+    @livewireScripts
 </body>
 </html>
