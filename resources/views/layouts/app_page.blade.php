@@ -131,6 +131,11 @@
                         </a>
                     </li>
                     @endcan
+                    <li>
+                        <a href="{{route('project_Managment')}}" style="text-align: center">
+                            <i class="iconsminds-engineering"></i> Gestion de Proyectos
+                        </a>
+                    </li>
                     @can('visualizar_cliente')
                     <li>
                         <a href="{{route('clients.index')}}" style="text-align: center">
@@ -241,14 +246,27 @@
     <script src="{{asset('js/dore.script.js')}}"></script>
     <script src="{{asset('js/script_double.js')}}"></script>
 
-    <script src="{{asset('js/vendor/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('js/vendor/progressbar.min.js')}}"></script>
     <script src="{{asset('js/vendor/jquery.barrating.min.js')}}"></script>
     <script src="{{asset('js/vendor/nouislider.min.js')}}"></script>
     <script src="{{asset('js/vendor/Sortable.js')}}"></script>
     <script src="{{asset('js/vendor/mousetrap.min.js')}}"></script>
     <script src="{{asset('js/vendor/glide.min.js')}}"></script>
-
+    <script>
+        
+        $('#value-input').on({
+            "focus": function(event) {
+                $(event.target).select();
+            },
+            "keyup": function(event) {
+                $(event.target).val(function(index, value) {
+                    return value.replace(/\D/g, "")
+                        .replace(/([0-9])([0-9]{2})$/, '$1.$2')
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+                });
+            }
+        });
+    </script>
     @stack('scripts')
     @livewireScripts
 </body>

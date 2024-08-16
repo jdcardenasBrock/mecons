@@ -66,11 +66,11 @@
                     </a>
                 </div>
                 <div class="col-xl-2 col-lg-2 mb-4">
-                    <a href="{{url('references')}}" class="card">
+                    <a href="{{url('equipo_clientes')}}" class="card">
                         <div class="card">
                             <div class="card-body d-flex justify-content-between align-items-center">
 
-                                <h6 class="mb-0">Modulo <br>Pedidos</h6>
+                                <h6 class="mb-0">Listado Equipos de Clientes</h6>
                                 <span class="badge badge-pill badge-outline-primary mb-1">Ir</span>
                             </div>
                         </div>

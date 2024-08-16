@@ -9,6 +9,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\CotizacionController;
+use App\Models\clients;
+
+use App\Http\Livewire\Construction\ProjectManagement;
+use App\Http\Livewire\Construction\ProjectCosts;
+
 use Spatie\Permission\Models\Role;
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +31,18 @@ Route::get('/', function () {
 })->name('welcome');
 
 
+Route::get('/project-management', function(){
+    return view('construction.managment');
+})->name("project_Managment");
+
+Route::get('/add_project', function(){
+    return view('construction.newProject');
+})->name("add_project");
+
+Route::get('/manage_project/{project_id}', function($project_id){
+    return view('construction.manageProject',compact('project_id'));
+})->name("manage_project");
+
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
@@ -41,9 +58,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('references/assign/{id}', [App\Http\Controllers\ReferencesController::class, 'AssignID']);
 
     // Resources para el modulo de clientes
+
     Route::resource('clients', ClientsController::class);
     Route::get('datatableClients', [App\Http\Controllers\ClientsController::class, 'GetData'])->name('Clients.data');
-
+    Route::get('detalleCliente/{id}', function($id){
+        $client=clients::where('id','=',$id)->first();
+        return view('clients.detail',compact('id','client'));
+    })->name('Clients.detalle');
+    Route::get('equipo_clientes', function(){
+        return view('clients.general');
+    })->name('equipo_clientes');
+    
+    
+    Route::get('/export-references', [App\Http\Controllers\ReferencesController::class, 'export'])->name('export.references');
+    
     // Resources para el modulo de proveedores
     Route::resource('proveedores', ProvidersController::class);
     Route::get('datatableProveedores', [App\Http\Controllers\ProvidersController::class, 'GetData'])->name('Providers.data');
@@ -69,4 +97,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('ajax/request/showProvider', function () {
         return false;
     })->name('ajax.ruta.showProvider');
+
+
 });

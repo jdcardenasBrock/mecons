@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Exports\ReferencesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReferencesController extends Controller
 {
@@ -228,5 +230,10 @@ class ReferencesController extends Controller
         } else {
             return json_encode(['success' => false, 'data' => "Verifique el Id, No es posible asociar por que no existe"]);
         }
+    }
+    public function export()
+    {
+        ini_set('memory_limit', '512M');
+        return Excel::download(new ReferencesExport, 'references_' . now()->timestamp . '.csv');
     }
 }

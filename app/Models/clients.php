@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\clients;
 use Illuminate\Support\Facades\DB;
 use App\Models\cotizacion;
 
@@ -33,9 +32,13 @@ class clients extends Model
         return $data;
     }
 
-
     public function cotizacion()
     {
         return $this->belongsTo(cotizacion::class, 'client_id', 'id');
+    }
+
+    public function equipos()
+    {
+        return $this->hasMany(equipoCliente::class, 'id_cliente');
     }
 }

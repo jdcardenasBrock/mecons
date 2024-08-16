@@ -124,6 +124,11 @@
                         </a>
                     </li>
                     @endcan
+                    <li>
+                        <a href="{{route('project_Managment')}}" style="text-align: center">
+                            <i class="iconsminds-engineering"></i> Gestion de Proyectos
+                        </a>
+                    </li>
                     @can('visualizar_cliente')
                     <li>
                         <a href="{{route('clients.index')}}" style="text-align: center">

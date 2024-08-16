@@ -11,6 +11,9 @@
                     @can('crear_referencia')
                     <button type="button" class="btn btn-outline-primary btn-lg top-right-button  mr-1" data-toggle="modal" data-backdrop="static" data-target="#exampleModal">Agregar Nuevo Registro</button>
                     @endcan
+
+                    
+
                     <div class="modal fade modal-right" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -201,11 +204,11 @@
 
                                 
                                 <button type="submit" class="btn btn-primary">Buscar</button>
+                                <livewire:export-references />
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
 
         <hr>

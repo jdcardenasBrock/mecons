@@ -30,3 +30,10 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+import Alpine from 'alpinejs'
+
+Alpine.start()
+
+// If you want Alpine's instance to be available everywhere.
+window.Alpine = Alpine
