@@ -70,20 +70,21 @@ let CotizacionsTable= $('#cotizacion_table').DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
-    Search:true,
+    search:true,
     ajax: {
         url: '{!! route("Cotizacions.data") !!}',
     },
     
     columns: [
-        { data: 'num_cotizacion' },
-        { data: 'nombreCotizacion' },
-        { data: 'cliente_cotizacion',orderable:false, searchable:false },
-        { data: 'date_created', orderable:false, searchable:false },
-        { data: 'cliente_id_num'},
-        { data: 'export', orderable:false, searchable:false },
+        { data: 'num_cotizacion', name: 'cotizacions.num_cotizacion' },
+        { data: 'nombreCotizacion', name: 'cotizacions.nombreCotizacion' },
+        { data: 'cliente_cotizacion', name: 'clients.name' }, // Referencia explícita
+        { data: 'date_created', orderable: false, searchable: false },
+        { data: 'cliente_id_num', name: 'cotizacions.cliente_id_num', orderable: false, searchable: false  },
+        { data: 'export', orderable: false, searchable: false },
     ]
 });
+
 $('#search-form').on('submit', function(e) {
     CotizacionsTable.draw();
     e.preventDefault();

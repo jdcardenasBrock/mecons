@@ -387,22 +387,26 @@ class CotizacionController extends Controller
     public function getDataQoutes(Request $request)
     {
 
-        $cotizacion = cotizacion::select('id','nombreCotizacion','num_cotizacion', 'array', 'cant', 'ref',  'marca', 'created_at')
-        ->orderBy('id', 'desc');
+        $cotizacion = cotizacion::select(
+            'cotizacions.id',
+            'cotizacions.nombreCotizacion',
+            'cotizacions.num_cotizacion',
+            'cotizacions.array',
+            'cotizacions.cant',
+            'cotizacions.ref',
+            'cotizacions.marca',
+            'cotizacions.created_at',
+            'clients.name as cliente_cotizacion' // Incluir el nombre del cliente directamente
+        )
+        ->leftJoin('clients', 'cotizacions.client_id', '=', 'clients.id') // Relación entre cotización y cliente
+        ->orderBy('cotizacions.id', 'desc');
+
         $datatables =  app('datatables')->of($cotizacion)
            
             ->addColumn('date_created', function ($cotizacion) {
                 $timestamp = strtotime($cotizacion->created_at);
                 $newDate = date("m-d-Y", $timestamp);
                 return $newDate;
-            })
-            ->addColumn('cliente_cotizacion', function ($cotizacion) {
-                $id_cliente=cotizacion::find($cotizacion->id)->client_id;
-                $cliente="";
-                if($id_cliente!=null){
-                    $cliente=clients::find($id_cliente)->name;
-                }
-                return $cliente;
             })
             ->addColumn('cliente_id_num', function ($cotizacion) {
                 $id_user=cotizacion::find($cotizacion->id)->created_by;
@@ -436,7 +440,6 @@ class CotizacionController extends Controller
                 return $r;
             })
             ->rawColumns(['date_created', 'cliente_cotizacion','export','cliente_id_num','hidden']);
-
         return $datatables->make(true);
     }
     public function exportPdf($id){
