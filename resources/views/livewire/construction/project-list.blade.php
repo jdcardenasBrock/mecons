@@ -1,4 +1,10 @@
 <div>
+    @if ($message)
+    <div class="alert alert-success">
+        {{ $message }}
+    </div>
+    @endif
+
     <table class="table table-bordered" id="projects-table">
         <thead>
             <tr>
@@ -22,13 +28,13 @@
                     </button>
                     <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 25.8px, 0px);">
                         <a href="{{route('manage_project',$project->id)}}">
-                            <button type="button" class="dropdown-item">Gestionar</button></a>   
-                                <a href=" #">
-                                <button type="button" class="dropdown-item">Eliminar</button></a>   
-                        </div>
+                            <button type="button" class="dropdown-item">Gestionar</button></a>
+                        <a href=" #">
+                            <button type="button" class="dropdown-item">Eliminar</button></a>
+                    </div>
 
 
-                   
+
                 </td>
             </tr>
             @endforeach

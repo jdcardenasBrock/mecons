@@ -58,6 +58,10 @@
                                             <input type="number" class="form-control" step="0.01" id="weights_pounds" name="weights_pounds" placeholder="">
                                         </div>
                                         <div class="form-group">
+                                            <label>Volumen m3</label>
+                                            <input type="number" class="form-control" step="0.01" id="volume" name="volume" placeholder="">
+                                        </div>
+                                        <div class="form-group">
                                             <label>Descripción</label>
                                             <textarea class="form-control" rows="4" id="description" name="description"></textarea>
                                         </div>
@@ -101,6 +105,10 @@
                                         <div class="form-group">
                                             <label>Peso en Libras</label>
                                             <input type="number" class="form-control" step="0.01"  id="edit_weights_pounds" name="edit_weights_pounds" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Volumen m3</label>
+                                            <input type="number" class="form-control" step="0.01" id="edit_volume" name="edit_volume" placeholder="">
                                         </div>
                                         <div class="form-group">
                                             <label>Descripción</label>
@@ -219,6 +227,7 @@
                         <th>Id</th>
                         <th>Referencia</th>
                         <th>Peso en Libras</th>
+                        <th>Volumen</th>
                         <th>Descripción</th>
                         <th>Marca</th>
                         <th>Notas</th>
@@ -287,6 +296,7 @@
                     { data: 'id_bold', name: 'id_bold', orderable:false, searchable:false },
                     { data: 'name_reference', name: 'name_reference' },
                     { data: 'weights_pounds', name: 'weights_pounds' , orderable:false, searchable:false},
+                    { data: 'volume', name: 'volume' , orderable:false, searchable:false},
                     { data: 'description', name: 'description' , orderable:false, searchable:false},
                     { data: 'brand', name: 'brand' , orderable:false, searchable:false},
                     {data: 'note_limited', name:'note_limited', orderable:false, searchable:false},
@@ -347,6 +357,7 @@
                     $("#_edit_id").val(json.data.id);
                     $('#edit_name_reference').val(json.data.name_reference);
                     $('#edit_weights_pounds').val(json.data.weights_pounds);
+                    $('#edit_volume').val(json.data.volume);
                     $('#edit_description').val(json.data.description);
                     $('#edit_brand').val(json.data.brand);
                     $('#edit_notes').val(json.data.notes);

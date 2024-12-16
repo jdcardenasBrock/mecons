@@ -59,7 +59,7 @@ class cotizacion extends Model
         'client_id',
         'created_by',
         'modified_by',
-        'rel_qoute'
+        'rel_qoute','nombreCotizacion'
     ];
 
     /**

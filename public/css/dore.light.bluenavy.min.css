@@ -2303,6 +2303,7 @@ main.default-transition {
 main .container-fluid {
     padding-left: 0;
     padding-right: 0;
+    animation-fill-mode: unset !important;
 }
 @media (max-width: 1439px) {
     main {

@@ -27,8 +27,6 @@
                                         <input type="hidden" id="_token" value="{{ csrf_token() }}">
                                         <input type="hidden" id="id_user_create" name="id_user_create" value="{{ Auth::user()->id }}" >
                                         @csrf
-                                       
-                                       
                                         <div class="form-group">
                                             <label>Nombre completo del cliente</label>
                                             <input type="text" class="form-control"  id="fullnameClient" name="fullnameClient" placeholder="">

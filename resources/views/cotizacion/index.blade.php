@@ -28,6 +28,7 @@
                     <thead>
                         <tr>
                             <th>Numero de Cotización</th>
+                            <th>Nombre</th>
                             <th>Cliente</th>
                             <th>Fecha de Cotización</th>
                             <th>Creado por</th>
@@ -75,8 +76,8 @@ let CotizacionsTable= $('#cotizacion_table').DataTable({
     },
     
     columns: [
-
         { data: 'num_cotizacion' },
+        { data: 'nombreCotizacion' },
         { data: 'cliente_cotizacion',orderable:false, searchable:false },
         { data: 'date_created', orderable:false, searchable:false },
         { data: 'cliente_id_num'},

@@ -10,16 +10,23 @@
         }
     </style>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-12">
 
-                <h6><b>Costos de {{$projectinfo->name}}</b><br>
-                    <b>Numero de Contrato: </b> {{$projectinfo->contract_number}}
-                </h6>
-                <div class="top-right-button-container ">
-                    <button type="button" class="btn btn-outline-primary btn-lg top-right-button  mr-1"
-                        data-toggle="modal" data-backdrop="static" data-target="#editProjectModal">Editar Datos</button>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6><b>Costos de {{$nameEdit}}</b><br>
+                        <b>Numero de Contrato: </b> {{$contract_numberEdit}}
+                    </h6>
+                    <div class="top-right-button-container">
+                        <button type="button" class="btn btn-outline-primary btn-lg top-right-button mr-1"
+                            data-toggle="modal" data-backdrop="static" data-target="#editProjectModal">Editar Datos</button>
+                            <a href="{{ route('project.export-pdf', $project_id) }}" class="btn btn-primary">Exportar PDF</a>
 
+                    </div>
+                </div>
+
+
+                <div class="top-right-button-container ">
                     {{-- Modal para edicion --}}
                     <div class="modal fade modal-right" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="editProjectModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -31,43 +38,43 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Nombre del Proyecto</label>
-                                            <input type="text" class="form-control" wire:model.defer="nameEdit" value="{{$nameEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Numero de Contrato</label>
-                                            <input type="text" class="form-control" wire:model.defer="contract_numberEdit" value="{{$contract_numberEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Número de Factura</label>
-                                            <input type="text" class="form-control" wire:model.defer="invoice_numberEdit" value="{{$invoice_numberEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Arquitecto a Cargo</label>
-                                            <input type="text" class="form-control" wire:model.defer="architect_in_chargeEdit" value="{{$architect_in_chargeEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Ingeniero a Cargo</label>
-                                            <input type="text" class="form-control" wire:model.defer="engineer_in_chargeEdit" value="{{$engineer_in_chargeEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha de Inicio</label>
-                                            <input type="date" class="form-control" wire:model.defer="start_dateEdit" value="{{$start_dateEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha Estimada de Entrega</label>
-                                            <input type="date" class="form-control" wire:model.defer="estimated_end_dateEdit" value="{{$estimated_end_dateEdit}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Valor Total del Proyecto</label>
-                                            <input id="value-input" class="form-control" type="text" wire:model.defer="total_valueEdit"  >
-                                                @error('total_valueEdit')
-                                                <small class="text-danger" role="alert">{{ $message }} </small>
-                                                @enderror
-                                        </div>
-                                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" wire:click="editProjectData()"  data-dismiss="modal" class="btn btn-primary">Guardar</button>
+                                    <div class="form-group">
+                                        <label>Nombre del Proyecto</label>
+                                        <input type="text" class="form-control" wire:model.defer="nameEdit" value="{{$nameEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Numero de Contrato</label>
+                                        <input type="text" class="form-control" wire:model.defer="contract_numberEdit" value="{{$contract_numberEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Número de Factura</label>
+                                        <input type="text" class="form-control" wire:model.defer="invoice_numberEdit" value="{{$invoice_numberEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Arquitecto a Cargo</label>
+                                        <input type="text" class="form-control" wire:model.defer="architect_in_chargeEdit" value="{{$architect_in_chargeEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ingeniero a Cargo</label>
+                                        <input type="text" class="form-control" wire:model.defer="engineer_in_chargeEdit" value="{{$engineer_in_chargeEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Inicio</label>
+                                        <input type="date" class="form-control" wire:model.lazy="start_dateEdit" value="{{$start_dateEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha Estimada de Entrega</label>
+                                        <input type="date" class="form-control" wire:model.defer="estimated_end_dateEdit" value="{{$estimated_end_dateEdit}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor Total del Proyecto</label>
+                                        <input id="value-input" class="form-control" type="text" wire:model.defer="total_valueEdit">
+                                        @error('total_valueEdit')
+                                        <small class="text-danger" role="alert">{{ $message }} </small>
+                                        @enderror
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" wire:click="editProjectData()" data-dismiss="modal" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -105,20 +112,20 @@
                                     <a href="#" class="card">
                                         <div class="card-body text-center">
                                             <p class="card-text mb-0">Fecha de Inicio</p>
-                                            <p class="lead text-center"> 
-                                               @if ($projectinfo->start_date !=null)
-                                                {{ $projectinfo->start_date }}       
-                                               @else
-                                                   Pendiente
-                                               @endif 
+                                            <p class="lead text-center">
+                                                @if ($start_dateEdit !=null)
+                                                {{ $start_dateEdit }}
+                                                @else
+                                                Pendiente
+                                                @endif
                                             </p>
                                             <p class="card-text mb-0 mt-1">Fecha Estimada de Cierre:</p>
                                             <p class="lead text-center">
-                                               @if ($projectinfo->estimated_end_date !=null)
-                                                {{ $projectinfo->estimated_end_date }}       
-                                               @else
-                                                   Pendiente
-                                               @endif 
+                                                @if ($estimated_end_dateEdit !=null)
+                                                {{ $estimated_end_dateEdit }}
+                                                @else
+                                                Pendiente
+                                                @endif
                                             </p>
                                         </div>
                                     </a>
@@ -134,11 +141,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">Agregar costo</h5>
                                 <div class="dashboard-quick-post">
-                                    <form wire:submit.prevent="addCost">
+                                    <form wire:submit="addCost">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Concepto</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="text" wire:model="concept" placeholder="">
+                                                <input class="form-control" type="text" wire:model.defer="concept" placeholder="">
                                                 @error('concept')
                                                 <small class="text-danger" role="alert">{{ $message }} </small>
                                                 @enderror
@@ -147,7 +154,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Fecha</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="date" wire:model="date">
+                                                <input class="form-control" type="date" wire:model.defer="date">
                                                 @error('date')
                                                 <small class="text-danger" role="alert">{{ $message }} </small>
                                                 @enderror
@@ -157,7 +164,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Número de Factura</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="text" wire:model="invoice_number" placeholder="">
+                                                <input class="form-control" type="text" wire:model.defer="invoice_number" placeholder="">
                                                 @error('invoice_number')
                                                 <small class="text-danger" role="alert">{{ $message }} </small>
                                                 @enderror
@@ -167,7 +174,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Contacto</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="text" wire:model="contact" placeholder="">
+                                                <input class="form-control" type="text" wire:model.defer="contact" placeholder="">
                                                 @error('contact')
                                                 <small class="text-danger" role="alert">{{ $message }} </small>
                                                 @enderror
@@ -186,7 +193,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Categoria</label>
                                             <div class="col-sm-9">
-                                                <select wire:model="category" class="form-control">
+                                                <select wire:model.defer="category" class="form-control">
                                                     <option value="">Selecciona una categoría</option>
                                                     <option value="TRANSPORTE Y LOGISTICA">Transporte y Logística</option>
                                                     <option value="MANO DE OBRA">Mano de Obra</option>

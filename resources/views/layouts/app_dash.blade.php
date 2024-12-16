@@ -129,6 +129,11 @@
                             <i class="iconsminds-engineering"></i> Gestion de Proyectos
                         </a>
                     </li>
+                    <!-- <li>
+                        <a href="{{route('crm')}}" style="text-align: center">
+                            <i class="iconsminds-optimization"></i> CRM
+                        </a>
+                    </li> -->
                     @can('visualizar_cliente')
                     <li>
                         <a href="{{route('clients.index')}}" style="text-align: center">

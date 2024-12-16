@@ -56,6 +56,7 @@ class ReferencesController extends Controller
                 $res = new references();
                 $res->name_reference = $request->name_reference;
                 $res->weights_pounds = $request->weights_pounds;
+                $res->volume = $request->volume;
                 $res->description = $request->description;
                 $res->brand = $request->brand;
                 $res->notes = $request->notes;
@@ -74,6 +75,7 @@ class ReferencesController extends Controller
                     $res->id_reference = $IdAsociar;
                     $res->name_reference = $request->name_reference;
                     $res->weights_pounds = $request->weights_pounds;
+                    $res->volume = $request->volume;
                     $res->description = $request->description;
                     $res->brand = $request->brand;
                     $res->notes = $request->notes;
@@ -126,6 +128,7 @@ class ReferencesController extends Controller
         $reg = references::findOrFail($id);
         $reg->name_reference = $request->edit_name_reference;
         $reg->weights_pounds = $request->edit_weights_pounds;
+        $reg->volume = $request->edit_volume;
         $reg->description = $request->edit_description;
         $reg->brand = $request->edit_brand;
         $reg->notes = $request->edit_notes;
@@ -151,7 +154,7 @@ class ReferencesController extends Controller
     }
     public function anyData(Request $request)
     {
-        $Reference = references::select('id','id_reference','name_reference','weights_pounds','description','brand','notes','created_at','updated_at')
+        $Reference = references::select('id','id_reference','name_reference','weights_pounds','volume','description','brand','notes','created_at','updated_at')
         ->orderBy('id','desc');
 
 

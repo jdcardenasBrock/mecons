@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Log;
 class ProjectCosts extends Component
 {
     public $project_id, $concept, $date, $invoice_number, $contact, $value, $category;
-    public $total_value, $total_cost, $profit, $margin,$projectinfo;
-    public $costs=[];
+    public $total_value, $total_cost, $profit, $margin, $projectinfo;
+    public $costs = [];
     public $searchTerm;
 
     public $nameEdit, $contract_numberEdit, $invoice_numberEdit, $start_dateEdit, $estimated_end_dateEdit, $engineer_in_chargeEdit, $architect_in_chargeEdit, $total_valueEdit, $total_costEdit, $profitEdit, $marginEdit;
@@ -25,7 +25,7 @@ class ProjectCosts extends Component
         $this->loadProjectData();
 
 
-        $this->projectinfo=Project::select( 'name', 'contract_number', 'invoice_number', 'start_date', 'estimated_end_date', 'engineer_in_charge', 'architect_in_charge', 'total_value', 'total_cost', 'profit', 'margin')->where('id',$project_id)->first();
+        $this->projectinfo = Project::select('name', 'contract_number', 'invoice_number', 'start_date', 'estimated_end_date', 'engineer_in_charge', 'architect_in_charge', 'total_value', 'total_cost', 'profit', 'margin')->where('id', $project_id)->first();
         $this->fillFormatEdit();
     }
     protected $messages = [
@@ -37,18 +37,19 @@ class ProjectCosts extends Component
         'category.required' => 'Debe ingresar una categoria válida.',
     ];
 
-    public function fillFormatEdit(){
-        $this->nameEdit=$this->projectinfo->name;
-        $this->contract_numberEdit=$this->projectinfo->contract_number;
-        $this->invoice_numberEdit=$this->projectinfo->invoice_number;
-        $this->start_dateEdit=$this->projectinfo->start_date;
-        $this->estimated_end_dateEdit=$this->projectinfo->estimated_end_date;
-        $this->engineer_in_chargeEdit=$this->projectinfo->engineer_in_charge;
-        $this->architect_in_chargeEdit=$this->projectinfo->architect_in_charge;
-        $this->total_valueEdit=$this->projectinfo->total_value;
-        $this->total_costEdit=$this->projectinfo->total_cost;
-        $this->profitEdit=$this->projectinfo->profit;
-        $this->marginEdit=$this->projectinfo->margin;
+    public function fillFormatEdit()
+    {
+        $this->nameEdit = $this->projectinfo->name;
+        $this->contract_numberEdit = $this->projectinfo->contract_number;
+        $this->invoice_numberEdit = $this->projectinfo->invoice_number;
+        $this->start_dateEdit = $this->projectinfo->start_date;
+        $this->estimated_end_dateEdit = $this->projectinfo->estimated_end_date;
+        $this->engineer_in_chargeEdit = $this->projectinfo->engineer_in_charge;
+        $this->architect_in_chargeEdit = $this->projectinfo->architect_in_charge;
+        $this->total_valueEdit = $this->projectinfo->total_value;
+        $this->total_costEdit = $this->projectinfo->total_cost;
+        $this->profitEdit = $this->projectinfo->profit;
+        $this->marginEdit = $this->projectinfo->margin;
     }
     public function addCost()
     {
@@ -75,15 +76,14 @@ class ProjectCosts extends Component
             'category' => $this->category,
         ]);
 
-        $this->loadProjectData();
-
-        session()->flash('message', 'Costo agregado exitosamente.');
+        return redirect()->route('manage_project', $this->project_id)
+        ->with('message', 'Costo agregado exitosamente.');
     }
 
     public function loadProjectData()
     {
         $project = Project::find($this->project_id);
-        $this->costs= Cost::where('project_id',$this->project_id)->get()->groupBy('concept');
+        $this->costs = Cost::where('project_id', $this->project_id)->get()->groupBy('concept');
         $this->total_value = $project->total_value;
         $this->total_cost = $project->costs->sum('value');
         $this->profit = $this->total_value - $this->total_cost;
@@ -96,10 +96,10 @@ class ProjectCosts extends Component
         ]);
     }
     public function updatedTotal_valueEdit($value)
-{
-    // Llama a la función que formatea el valor
-    $this->total_valueEdit = $this->FormatAmmount($value);
-}
+    {
+        // Llama a la función que formatea el valor
+        $this->total_valueEdit = $this->FormatAmmount($value);
+    }
 
     public function FormatAmmount($numero)
     {
@@ -109,49 +109,23 @@ class ProjectCosts extends Component
         return $numeroFormateado;
     }
 
-    public function editProjectData(){
-        $this->validate([
-            'nameEdit' => 'required',
-            'contract_numberEdit' => 'required',
-            'invoice_numberEdit' => 'required',
-            'architect_in_chargeEdit' => 'required',
-            'engineer_in_chargeEdit' => 'required',
-            'start_dateEdit' => 'required|date',
-            'estimated_end_dateEdit' => 'required|date',
-            'total_valueEdit'  => 'required|date'
-        ]);
-        try {
-            // Iniciar la transacción
-            DB::beginTransaction();
-    
-            // Supongamos que tienes un modelo Project y estás actualizando un proyecto
-            $project = Project::findOrFail($this->project_id);
-    
-            $project->name = $this->nameEdit;
-            $project->contract_number = $this->contract_numberEdit;
-            $project->invoice_number = $this->invoice_numberEdit;
-            $project->architect_in_charge = $this->architect_in_chargeEdit;
-            $project->engineer_in_charge = $this->engineer_in_chargeEdit;
-            $project->start_date = $this->start_dateEdit;
-            $project->estimated_end_date = $this->estimated_end_dateEdit;
-            $project->total_value = $this->total_valueEdit;
-    
-            // Guardar los cambios
-            $project->save();
-    
-            // Confirmar la transacción
-            DB::commit();
+    public function editProjectData()
+    {
+        $totalValueEdit = str_replace(',', '', $this->total_valueEdit); // Eliminar comas
+        $totalValueEdit = str_replace('.', '.', $totalValueEdit);
 
-        } catch (\Exception $e) {
-            // Realizar rollback en caso de error
-            DB::rollback();
-    
-            // Registrar el error
-            Log::error('Error al actualizar los datos del proyecto: ' . $e->getMessage());
-    
-            // Mensaje de error
-            session()->flash('error', 'Hubo un error al actualizar los datos del proyecto.');
-        }
+        $project = Project::findOrFail($this->project_id);
+        $project->name = $this->nameEdit;
+        $project->contract_number = $this->contract_numberEdit;
+        $project->invoice_number = $this->invoice_numberEdit;
+        $project->architect_in_charge = $this->architect_in_chargeEdit;
+        $project->engineer_in_charge = $this->engineer_in_chargeEdit;
+        $project->start_date = $this->start_dateEdit;
+        $project->estimated_end_date = $this->estimated_end_dateEdit;
+        $project->total_value = $totalValueEdit;
+        $project->save();
+        return redirect()->route('manage_project', $this->project_id)
+        ->with('message', 'Costo agregado exitosamente.');
     }
     public function render()
     {
@@ -165,11 +139,12 @@ class ProjectCosts extends Component
                     ->orWhere('value', 'like', '%' . $this->searchTerm . '%');
             });
         })
-        ->where('project_id', '=', $this->project_id)
-        ->whereNotNull('project_id')
-        ->select( 'project_id', 'concept', 'date', 'invoice_number', 'contact', 'value', 'category')
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->where('project_id', '=', $this->project_id)
+            ->whereNotNull('project_id')
+            ->select('project_id', 'concept', 'date', 'invoice_number', 'contact', 'value', 'category')
+            ->orderBy('created_at', 'desc')
+            ->get();
+          
         return view('livewire.construction.project-costs');
     }
 }

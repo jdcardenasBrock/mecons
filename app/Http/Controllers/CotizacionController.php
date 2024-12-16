@@ -7,6 +7,7 @@ use App\Models\cotizacion;
 use Illuminate\Http\Request;
 use App\Models\clients;
 use App\Models\providers;
+use App\Models\references;
 use App\Models\User;
 
 class CotizacionController extends Controller
@@ -37,9 +38,26 @@ class CotizacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function searchQuote(Request $request)
+    {
+        $query = $request->get('query');
+        
+        // Validación básica (opcional)
+        if (!$query || strlen($query) < 3) {
+            return response()->json([]);
+        }
+
+        // Consultar la base de datos
+        $results = references::where('name_reference', 'LIKE', '%' . $query . '%')
+            ->orWhere('id_reference', $query)
+            ->take(10) // Limitar los resultados
+            ->get(['id', 'weights_pounds','volume','brand']);
+
+        return response()->json($results);
+    }
+
     public function store(Request $request)
     {
-        
         $cotizacion = new cotizacion();
         $cotizacion->array=json_encode($request->export_array);
         //Variables de Calculo Usuario
@@ -90,7 +108,7 @@ class CotizacionController extends Controller
         $cotizacion->ivaFinal=$request->export_ivaFinal;
         $cotizacion->GranTotal=$request->export_Gran_Total;
         $cotizacion->notas=$request->export_notas;
-    
+        $cotizacion->nombreCotizacion=$request->export_nombre;
         $cotizacion->rentabilidadFinal=$request->export_rentabilidadFinal;
         $cotizacion->rentabilidadFinalPorc=$request->export_rentabilidadFinalPorc;
         $cotizacion->dolarRealCalc=$request->export_dolarRealCalc;
@@ -274,7 +292,7 @@ class CotizacionController extends Controller
         $cotizacion->ivaFinal=$request->export_ivaFinal;
         $cotizacion->GranTotal=$request->export_Gran_Total;
         $cotizacion->notas=$request->export_notas;
-    
+        $cotizacion->nombreCotizacion=$request->export_nombre;
         $cotizacion->rentabilidadFinal=$request->export_rentabilidadFinal;
         $cotizacion->rentabilidadFinalPorc=$request->export_rentabilidadFinalPorc;
         $cotizacion->dolarRealCalc=$request->export_dolarRealCalc;
@@ -369,7 +387,7 @@ class CotizacionController extends Controller
     public function getDataQoutes(Request $request)
     {
 
-        $cotizacion = cotizacion::select('id','num_cotizacion', 'array', 'cant', 'ref',  'marca', 'created_at')
+        $cotizacion = cotizacion::select('id','nombreCotizacion','num_cotizacion', 'array', 'cant', 'ref',  'marca', 'created_at')
         ->orderBy('id', 'desc');
         $datatables =  app('datatables')->of($cotizacion)
            

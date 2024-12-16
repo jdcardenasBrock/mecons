@@ -9,11 +9,19 @@ class ProjectList extends Component
 {
     public $projects;
     public $search = '';
+    public $message;
+
+    protected $listeners = ['projectCreated'];
 
     public function mount()
     {
         $this->loadProjects();
     }
+    public function projectCreated($message)
+    {
+        $this->message = $message;
+    }
+
 
     public function updatedSearch()
     {

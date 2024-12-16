@@ -31,8 +31,8 @@ class ProjectManagement extends Component
             'profit' => 0,
             'margin' => 0,
         ]);
-
-        session()->flash('message', 'Proyecto creado exitosamente.');
+        return redirect(route('project_Managment'));
+        $this->emit('projectCreated', 'Proyecto creado exitosamente.');
     }
 
     public function render()

@@ -6,6 +6,7 @@ $(document).ready(function () {
     $("#name_reference").val("");
     $("#weights_pounds").val("");
     $("#description").val("");
+    $("#volume").val("");
     $("#brand").val("");
     $("#notes").val("");
     $("#id_asociar").val("");
@@ -15,6 +16,7 @@ $(document).ready(function () {
   function vaciar_Inputs_Edit() {
     $("#edit_name_reference").val("");
     $("#edit_weights_pounds").val("");
+    $("#edit_volume").val("");
     $("#edit_description").val("");
     $("#edit_brand").val("");
     $("#edit_notes").val("");
@@ -32,6 +34,7 @@ $(document).ready(function () {
       $("#weights_pounds").focus();
       return false;
     }
+    
     if ($("#description").val() === "") {
       alert("Debe ingresar la descripción", "Atencion!");
       $("#description").focus();

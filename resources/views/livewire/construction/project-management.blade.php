@@ -80,6 +80,9 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mb-0">Guardar Proyecto</button>
+                        <a href="{{route('project_Managment')}}">
+                            <button type="button" class="btn btn-light mb-0">Volver</button>
+                        </a>
                     </form>
                 </div>
             </div>
