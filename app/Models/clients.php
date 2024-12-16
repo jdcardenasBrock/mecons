@@ -10,7 +10,7 @@ use App\Models\cotizacion;
 class clients extends Model
 {
     use HasFactory;
-    protected $fillable= ['name','typeID','numID','direccion','telefono','margen','created_by','modified_by'];
+    protected $fillable= ['name','typeID','numID','direccion','telefono','margen','web','created_by','modified_by'];
 
     public static function searchById($value)
     {

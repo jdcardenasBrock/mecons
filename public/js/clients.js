@@ -9,6 +9,7 @@ $(document).ready(function () {
         $("#directionClient").val("");
         $("#phoneClient").val("");
         $("#marginClient").val("");
+        $("#webClient").val("");
     }
     function vaciar_Inputs_Edit() {
         $("#edit_fullnameClient").val("");
@@ -17,6 +18,7 @@ $(document).ready(function () {
         $("#edit_directionClient").val("");
         $("#edit_phoneClient").val("");
         $("#edit_marginClient").val("");
+        $("#edit_webClient").val("");
     }
 
     //metodo para ingresar registro
@@ -46,9 +48,9 @@ $(document).ready(function () {
             $("#phoneClient").focus();
             return false;
         }
-        if ($("#marginClient").val() == "") {
-            alert("Indique el margen sugerido");
-            $("#marginClient").focus();
+        if ($("#webClient").val() == "") {
+            alert("Indique la página web");
+            $("#webClient").focus();
             return false;
         }
         if ($("#id_user_create").val() == "") {
@@ -107,9 +109,9 @@ $(document).ready(function () {
             $("#edit_phoneClient").focus();
             return false;
         }
-        if ($("#edit_marginClient").val() == "") {
-            alert("Indique el margen sugerido");
-            $("#edit_marginClient").focus();
+        if ($("#edit_webClient").val() == "") {
+            alert("Indique la página web");
+            $("#edit_webClient").focus();
             return false;
         }
         if ($("#id_user_edit").val() == "") {

@@ -33,7 +33,7 @@ class ClientsController extends Controller
         $client->numID=$request->identificationClient;
         $client->direccion=$request->directionClient;
         $client->telefono=$request->phoneClient;
-        $client->margen=$request->marginClient;
+        $client->web=$request->webClient;
         $client->created_by=$request->id_user_create;
         $client->save();
         return json_encode(['success' => true]);        
@@ -68,7 +68,7 @@ class ClientsController extends Controller
         $client->numID=$request->edit_identificationClient;
         $client->direccion=$request->edit_directionClient;
         $client->telefono=$request->edit_phoneClient;
-        $client->margen=$request->edit_marginClient;
+        $client->web=$request->edit_webClient;
         $client->modified_by=$request->id_user_edit;
         $client->save();
         return json_encode(['success' => true]);
@@ -92,7 +92,7 @@ class ClientsController extends Controller
     }
     public function getData(Request $request)
     {
-        $Client = clients::select('id','name', 'typeID', 'numID', 'direccion', 'telefono', 'margen', 'created_at')
+        $Client = clients::select('id','name', 'typeID', 'numID', 'direccion', 'telefono', 'margen', 'web','created_at')
         ->orderBy('id', 'asc');
 
         $datatables =  app('datatables')->of($Client)

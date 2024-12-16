@@ -51,9 +51,13 @@
                                             <label>Telefono</label>
                                             <input type="text" class="form-control" placeholder="" id="phoneClient" name="phoneClient">
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label>Margen Sugerido</label>
                                             <input type="number" class="form-control" placeholder="" id="marginClient" name="marginClient">
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label>Pagina Web</label>
+                                            <input type="text" class="form-control" placeholder="" id="webClient" name="webClient">
                                         </div>
                                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
                                         <button type="submit"  class="btn btn-primary">Guardar</button>
@@ -105,9 +109,13 @@
                                             <label>Telefono</label>
                                             <input type="text" class="form-control" placeholder="" id="edit_phoneClient" name="edit_phoneClient">
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label>Margen Sugerido</label>
                                             <input type="number" class="form-control" placeholder="" id="edit_marginClient" name="edit_marginClient">
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label>Pagina Web</label>
+                                            <input type="text" class="form-control" placeholder="" id="edit_webClient" name="edit_webClient">
                                         </div>
                                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
                                         <button type="submit"  class="btn btn-primary">Editar</button>
@@ -130,9 +138,8 @@
                         
                         <th>Nombre del Cliente</th>
                         <th>Numero de Identificación</th>
+                        <th>Página Web</th>
                         <th>Descripción</th>
-                        <th>Telefono</th>
-                        <th>Margen Sugerido</th>
                         <th>Fecha de Creación</th>
                         <th></th>
                     </tr>
@@ -184,9 +191,8 @@
                 columns: [
                     { data: 'name', name: 'name' },
                     { data: 'typeNumID', name: 'numID'},
+                    { data: 'web', name: 'web'},
                     { data: 'direccion', name: 'direccion' , orderable:false, searchable:false},
-                    { data: 'telefono', name: 'telefono' , orderable:false, searchable:false},
-                    {data: 'marginPorc', name:'marginPorc'},
                     { data: 'date_created', name: 'date_created', orderable:false, searchable:false },
                     { data: 'actions', name: 'actions', orderable:false, searchable:false },
                 ]
@@ -228,6 +234,7 @@
             $('#edit_description').val("");
             $('#edit_brand').val("");
             $('#edit_notes').val("");
+            $('#edit_webClient').val("");
         }
 
     function edit(event){
@@ -247,7 +254,7 @@
                     $('#edit_identificationClient').val(json.data.numID);
                     $('#edit_directionClient').val(json.data.direccion);
                     $('#edit_phoneClient').val(json.data.telefono);
-                    $('#edit_marginClient').val(json.data.margen);
+                    $('#edit_webClient').val(json.data.web);
                     }else{
                     alert(json.data);
                     }
