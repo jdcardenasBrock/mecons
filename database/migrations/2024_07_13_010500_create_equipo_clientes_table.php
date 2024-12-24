@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('equipo_clientes', function (Blueprint $table) {
             $table->id();
 
-            $table->string('marca')->nullable();
-            $table->string('nombre_modelo')->nullable();
-            $table->string('modelo')->nullable();
+            $table->unsignedBigInteger('marca')->nullable();
+            $table->foreign('marca')->references('id')->on('marcas');
+            $table->unsignedBigInteger('nombre_modelo')->nullable();
+            $table->foreign('nombre_modelo')->references('id')->on('nombre_modelos');
+            $table->unsignedBigInteger('modelo')->nullable();
+            $table->foreign('modelo')->references('id')->on('modelos');
             $table->string('serial')->nullable();
             $table->string('numero_interno')->nullable();
             $table->string('ubicacion')->nullable();

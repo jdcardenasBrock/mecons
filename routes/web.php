@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('crm.managment');
     })->name("crm");
 
+    Route::get('/marcas', function () {
+        return view('crm.marcas');
+    })->name("marcas");
+
     Route::get('/new_task', function () {
         return view('crm.newTask');
     })->name("new_task");

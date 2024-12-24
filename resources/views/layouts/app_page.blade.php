@@ -139,6 +139,11 @@
                             <i class="iconsminds-engineering"></i> Gestion de Proyectos
                         </a>
                     </li>
+                    <li>
+                        <a href="{{route('marcas')}}" style="text-align: center">
+                            <i class="iconsminds-engineering"></i> Admin Maquinaria
+                        </a>
+                    </li>
                     <!-- <li>
                         <a href="{{route('crm')}}" style="text-align: center">
                             <i class="iconsminds-optimization"></i> CRM

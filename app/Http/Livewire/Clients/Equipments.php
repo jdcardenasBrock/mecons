@@ -2,32 +2,51 @@
 
 namespace App\Http\Livewire\Clients;
 
+use App\Models\Departamento;
 use App\Models\equipoCliente;
+use App\Models\marcas;
+use App\Models\modelos;
+use App\Models\nombre_modelos;
 use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class Equipments extends Component
 {
     public $marca, $nombre_modelo,
-        $modelo, $serial, $numero_interno, $ubicacion,
-        $clientId, $successMessage, $searchTerm, $dataEquipos, $actionMessage, $EditEquipo, $equipmentId;
+        $modelo, $serial, $numero_interno, $ubicacion, $departamentos,
+        $clientId, $successMessage, $searchTerm, $dataEquipos, $actionMessage,
+        $EditEquipo, $equipmentId;
 
+    public $marcas;
+    public $modelos = [];
+    public $nombreModelos = [];
+
+    public $marcaSeleccionada = null;
+    public $modeloSeleccionado = null;
+    public $nombreModeloSeleccionado = null;
 
     public function render()
     {
-        $this->dataEquipos = equipoCliente::when($this->searchTerm, function ($query) {
-            $query->where(function ($subQuery) {
-                $subQuery->where('marca', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('nombre_modelo', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('modelo', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('serial', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('numero_interno', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('ubicacion', 'like', '%' . $this->searchTerm . '%');
-            });
-        })
+        $this->dataEquipos = equipoCliente::with(['marca', 'modelo', 'nombreModelo'])
+            ->when($this->searchTerm, function ($query) {
+                $query->where(function ($subQuery) {
+                    $subQuery->whereHas('marca', function ($q) {
+                        $q->where('nombre', 'like', '%' . $this->searchTerm . '%');
+                    })
+                        ->orWhereHas('modelo', function ($q) {
+                            $q->where('nombre', 'like', '%' . $this->searchTerm . '%');
+                        })
+                        ->orWhereHas('nombre_modelo', function ($q) {
+                            $q->where('nombre', 'like', '%' . $this->searchTerm . '%');
+                        })
+                        ->orWhere('serial', 'like', '%' . $this->searchTerm . '%')
+                        ->orWhere('numero_interno', 'like', '%' . $this->searchTerm . '%')
+                        ->orWhere('ubicacion', 'like', '%' . $this->searchTerm . '%');
+                });
+            })
             ->where('id_cliente', '=', $this->clientId)
             ->whereNotNull('id_cliente')
-            ->select('id', 'marca', 'nombre_modelo', 'modelo', 'serial', 'numero_interno', 'ubicacion', 'id_cliente')
+            ->select('id', 'marca', 'modelo', 'nombre_modelo', 'serial', 'numero_interno', 'ubicacion', 'id_cliente')
             ->orderBy('created_at', 'desc')
             ->get();
         return view('livewire.clients.equipments');
@@ -43,16 +62,48 @@ class Equipments extends Component
     ];
     public function mount($idCliente)
     {
+        $this->marcas = marcas::all();
         $this->clientId = $idCliente;
-        $this->dataEquipos = equipoCliente::select('marca', 'nombre_modelo', 'modelo', 'serial', 'numero_interno', 'ubicacion', 'id_cliente')->where('id_cliente', '=', $this->clientId)->get();
+        $this->dataEquipos = equipoCliente::select(
+            'marca',
+            'nombre_modelo',
+            'modelo',
+            'serial',
+            'numero_interno',
+            'ubicacion',
+            'id_cliente'
+        )->where('id_cliente', '=', $this->clientId)->get();
+        $this->departamentos = Departamento::with('municipios')->get();
     }
+    public function updatedMarcaSeleccionada($marcaId)
+    {
+        // Cargar los modelos según la marca seleccionada
+        $this->modelos = modelos::where('marca_id', $marcaId)->get();
+        $this->modeloSeleccionado = null; // Resetear selección
+        $this->nombreModelos = [];
+    }
+    public function updatedModeloSeleccionado($modeloId)
+    {
+        // Cargar los nombres de modelo según el modelo seleccionado
+        $this->nombreModelos = nombre_modelos::where('modelo_id', $modeloId)->get();
+        $this->nombreModeloSeleccionado = null; // Resetear selección
+    }
+
     public function submitEquipos()
     {
-        $this->validate();
+        $this->validate([
+            'marcaSeleccionada' => 'required',
+            'modeloSeleccionado' => 'required',
+            'nombreModeloSeleccionado' => 'required',
+            'serial' => 'required',
+            'numero_interno' => 'required',
+            'ubicacion' => 'required',
+        ]);
+
         $equipo = new equipoCliente();
-        $equipo->marca = $this->marca;
-        $equipo->nombre_modelo = $this->nombre_modelo;
-        $equipo->modelo = $this->modelo;
+        $equipo->marca = $this->marcaSeleccionada;
+        $equipo->nombre_modelo = $this->nombreModeloSeleccionado;
+        $equipo->modelo = $this->modeloSeleccionado;
         $equipo->serial = $this->serial;
         $equipo->numero_interno = $this->numero_interno;
         $equipo->ubicacion = $this->ubicacion;

@@ -9,28 +9,45 @@
                     <p class="list-item-heading mb-4">Agregar Equipo</p>
                     @endif
                     <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="marca">Marca <small class="text-danger text-bold"><i>*</i></small></label>
-                                <input type="text" class="form-control" id="marca" wire:model.defer="marca">
-                                @error('marca')
-                                <small class="text-danger" role="alert">{{ $message }} </small>
-                                @enderror
+                        <div class="form-row col-12">
+                            <div class="form-group col-4">
+                                <label for="marca">Marca</label>
+                                <select id="marca" class="form-control" wire:model="marcaSeleccionada">
+                                    <option value="">Seleccione una Marca</option>
+                                    @foreach($marcas as $marca)
+                                    <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @error('marcaSeleccionada') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="nombre_modelo">Nombre del Modelo <small class="text-danger text-bold"><i>*</i></small></label>
-                                <input type="text" class="form-control" id="nombre_modelo" wire:model.defer="nombre_modelo">
-                                @error('nombre_modelo')
-                                <small class="text-danger" role="alert">{{ $message }} </small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
+
+                            <!-- Select para el Modelo -->
+                            @if (!is_null($marcaSeleccionada))
+                            <div class="form-group col-4">
                                 <label for="modelo">Modelo</label>
-                                <input type="text" class="form-control" id="modelo" wire:model.defer="modelo">
-                                @error('modelo')
-                                <small class="text-danger" role="alert">{{ $message }} </small>
-                                @enderror
+                                <select id="modelo" class="form-control" wire:model="modeloSeleccionado">
+                                    <option value="">Seleccione un Modelo</option>
+                                    @foreach($modelos as $modelo)
+                                    <option value="{{ $modelo->id }}">{{ $modelo->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @error('modeloSeleccionado') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
+                            @endif
+
+                            <!-- Select para el Nombre del Modelo -->
+                            @if (!is_null($modeloSeleccionado))
+                            <div class="form-group col-4">
+                                <label for="nombre_modelo">Nombre del Modelo</label>
+                                <select id="nombre_modelo" class="form-control" wire:model="nombreModeloSeleccionado">
+                                    <option value="">Seleccione un Nombre</option>
+                                    @foreach($nombreModelos as $nombreModelo)
+                                    <option value="{{ $nombreModelo->id }}">{{ $nombreModelo->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @error('nombreModeloSeleccionado') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+                            @endif
                             <div class="form-group col-md-6">
                                 <label for="serial">Serial</label>
                                 <input type="text" class="form-control" id="serial" wire:model.defer="serial">
@@ -47,7 +64,17 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="ubicacion">Ubicación</label>
-                                <input type="text" class="form-control" id="ubicacion" wire:model.defer="ubicacion">
+                                <select name="municipio" id="ubicacion" wire:model.defer="ubicacion" class="form-control">
+                                    <option value="">-- Seleccione un Municipio --</option>
+                                    @foreach($departamentos as $departamento)
+                                    <optgroup label="{{ $departamento->nombre }}">
+                                        @foreach($departamento->municipios as $municipio)
+                                        <option value="{{ $municipio->nombre }} -- {{ $departamento->nombre }}">{{ $municipio->nombre }} </option>
+                                        @endforeach
+                                    </optgroup>
+                                    @endforeach
+                                </select>
+
                                 @error('ubicacion')
                                 <small class="text-danger" role="alert">{{ $message }} </small>
                                 @enderror
@@ -92,8 +119,9 @@
                             </a>
                             <div class="pl-3 flex-grow-1">
                                 <a href="#">
-                                    <p class="font-weight-semibold mb-0">{{ucwords($equipo->marca)}} {{ucwords($equipo->nombre_modelo)}} {{ucwords($equipo->modelo)}} </p>
-                                    <p class="text-muted mb-0 text-medium"><b>Serial:</b> {{ ucwords($equipo->serial)}} <b>|</b> <b>Numero Interno:</b> {{$equipo->numero_interno}} <b>|</b> <b>Ubicación:</b> {{$equipo->ubicacion}}</p>
+                                    <p class="font-weight-semibold mb-0">{{ucwords($equipo->marca()->first()->nombre)}}  {{ucwords($equipo->modelo()->first()->nombre)}} </p>
+                                    <p class="font-weight-semibold mb-0">{{ucwords($equipo->nombreModelo()->first()->nombre)}} </p>
+                                    <p class="text-muted mb-0 text-medium"><b>Serial:</b> {{ ucwords($equipo->serial)}} <b>|</b> <b>Numero Interno:</b> {{$equipo->numero_interno}} <b><br></b> <b>Ubicación:</b> {{$equipo->ubicacion}}</p>
                                 </a>
                             </div>
                             <div class="comment-likes">
